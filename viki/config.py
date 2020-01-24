@@ -13,7 +13,11 @@ if False in [sys.platform == "linux", sys.platform == "linux2"]:
     os.environ['DB_SERVICE'] = "localhost"
 
 
-class BaseConfig(object):
+class Config(object):
+    THREAD_WORKERS_NUM = int(os.environ['THREAD_WORKERS_NUM'])
+    LOG_FILE_SIZE = int(os.environ['LOG_FILE_SIZE'])
+    VIEWER_PORT = int(os.environ['VIEWER_PORT'])
+
     VIKI_DB_NAME = os.environ['VIKI_DB_NAME']
     VIKI_DB_USER = os.environ['VIKI_DB_USER']
     VIKI_DB_PASS = os.environ['VIKI_DB_PASS']
@@ -34,4 +38,3 @@ class BaseConfig(object):
     SQLALCHEMY_BINDS = {'viki': VIKI_DB_URI }
     SQLALCHEMY_TRACK_MODIFICATIONS = bool(int(
         os.environ['SQLALCHEMY_TRACK_MODIFICATIONS']))
-
