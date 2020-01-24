@@ -1,37 +1,34 @@
 import os
 from datetime import datetime
+
 from flask import (
     Flask, render_template, jsonify, request, abort,
-    send_from_directory)
+    send_from_directory, Response, session)
 from flask_restful import Resource, Api
 from flask_cors import CORS
 from flask_migrate import Migrate
+from flask_socketio import SocketIO, emit
 from htmlmin.main import minify
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import (
     JWTManager, create_access_token, create_refresh_token,
     jwt_required, jwt_refresh_token_required, get_jwt_identity,
-    get_jti, get_raw_jwt
-)
+    get_jti, get_raw_jwt)
+
 from models import *
 from serializer import *
-from config import BaseConfig
+from config import Config
 from logger import Logger
 
-
 app = Flask(__name__)
-app.config.from_object(BaseConfig)
+app.config.from_object(Config)
 db.init_app(app)
 migrate = Migrate(app, db)
 api = Api(app)
 flask_bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 cors = CORS(app)
-
-
-@app.route('/')
-def home():
-    return render_template('index.html')
+socketio = SocketIO(app)
 
 
 @socketio.on('connect')
@@ -72,5 +69,11 @@ def handle_sema(sema):
         print('semaStore Broadcasting >>> ', ret)
 
 
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=Config.VIEWER_PORT)
