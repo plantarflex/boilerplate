@@ -1,0 +1,16 @@
+__pycache__/*
+*.swa
+*.swp
+*.pyc
+yarn.lock
+viewer/frontend/node_modules/*
+viewer/static/images/*
+viewer/static/js/*
+viewer/static/css/*
+viewer/static/assets/asset-manifest.json
+viewer/static/assets/*.js
+viewer/frontend/src/config.js
+viewer/templates/index.html
+viewer/migrations/*
+.DS_Store
+DS_Store

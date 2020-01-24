@@ -1,0 +1,72 @@
+version: '2.4'
+services:
+  nginx:
+    restart: always
+    image: nginx
+    ports:
+      - 60080:80
+    volumes:
+      - ./nginx/no-ssl:/etc/nginx/conf.d/default.conf
+     # - ./nginx/ssl:/etc/nginx/conf.d/default.conf
+    volumes_from:
+      - viewer
+    links:
+      - viewer
+
+  viki:
+    restart: always
+    build:
+      context: ./viki
+    env_file: .env
+    ports:
+      - 8001:8001
+    volumes:
+      - ./viki:/usr/src/app
+    links:
+      - db_viki
+    command: python3.6 demon.py
+
+  viewer:
+    restart: always
+    build:
+      context: ./viewer
+    env_file: .env
+    ports:
+      - 8000:8000
+    volumes:
+      - ./viki/config.py:/usr/scr/app/config.py
+      - ./viewer:/usr/src/app
+    links:
+      - db_viewer
+      - db_viki
+    command: python3.6 app.py
+
+
+  db_viki:
+    restart: always
+    image: postgres:latest
+    volumes_from:
+      - data_viki
+    expose:
+      - 5432
+
+  data_viki:
+    image: postgres:latest
+    volumes:
+      - ./data_viki:/var/lib/postgresql/data_viki
+    command: "true"
+
+  db_viewer:
+    restart: always
+    image: postgres:latest
+    volumes_from:
+      - data_viewer
+    expose:
+      - 5432
+ 
+  data_viewer:
+    image: postgres:latest
+    volumes:
+      - ./data_viewer:/var/lib/postgresql/data_viewer
+    command: "true"
+
