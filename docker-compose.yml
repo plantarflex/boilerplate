@@ -34,7 +34,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./viki/config.py:/usr/scr/app/config.py
+      - ./viki/config.py:/usr/src/app/config.py
       - ./viewer:/usr/src/app
     links:
       - db_viewer
