@@ -8,7 +8,7 @@ env_path = os.path.join(basedir, '../.env')
 load_dotenv(dotenv_path=env_path)
 
 
-class BaseConfig(object):
+class Config(object):
     VERSION = os.environ['VERSION']
     SECRET_KEY = os.environ['SECRET_KEY']
     DB_NAME = os.environ['DB_NAME']
