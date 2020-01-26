@@ -6,7 +6,7 @@ from threading import Thread, Lock
 from concurrent.futures import ThreadPoolExecutor
 
 from models import *
-from clients import Client
+from clients import FileClient
 from manage import init_db, connect_db
 from logger import Logger
 from config import Config

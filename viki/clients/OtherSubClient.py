@@ -15,7 +15,7 @@ class BaseClient(ABC):
         pass
 
 
-class SubClient(BaseClient):
+class OtherSubClient(BaseClient):
     def connect(self):
         pass
 
