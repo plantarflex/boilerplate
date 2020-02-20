@@ -9,10 +9,6 @@ env_path = Path(os.path.join(basedir, "..")) / '.env'
 load_dotenv(dotenv_path=env_path)
 
 
-if False in [sys.platform == "linux", sys.platform == "linux2"]:
-    os.environ['DB_SERVICE'] = "localhost"
-
-
 class Config(object):
     THREAD_WORKERS_NUM = int(os.environ['THREAD_WORKERS_NUM'])
     LOG_FILE_SIZE = int(os.environ['LOG_FILE_SIZE'])
